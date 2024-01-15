@@ -9,44 +9,24 @@ This session is all about audio. In the presentation we covered audio format typ
 - Learn how to profile audio
 
 ## Tutorial
-1. Open the Unity project **02 - Unity Audio Optimisation**.
-2. Open **02 - Visualising Audio.ipynb** in VS Code. Set the file path to an audio file. Run the code to visualise the audio. Assess what the highest frequencies might be and test different sampling rates.
+1. Open the Unity project **02 - Unity Audio Optimisation**. Do task 2 while it loads.
+2. Open **02 - Visualising Audio.ipynb** in VS Code. Run the code to visualise the audio. Assess what the highest frequencies might be and test how different sampling rates affect the quality.
 3. Profile the project: Open the Profiler (Windows > Analysis > Profiler). Add the Profiler Module for Audio (Inside the profiler go to Profiler Modules and tick Audio). Set the view to Detailed. Copy the information from the audio profiler, like shown here:
 
-Also take note of the time per frame on the CPU usage, like shown here: 
-- Time per Frame: 5.71 ms
-
-Total Audio Sources: 41
-Playing Audio Sources: 38
-Paused Audio Sources: 3
-Audio Clip Count: 8
-Audio Voices: 38
-Total Audio CPU: 1.3 %
-DSP CPU: 0.7 %
-Streaming CPU: 0.0 %
-Other CPU: 0.6 %
-Total Audio Memory: 46.5 MB
-Streaming File Memory: 0 B
-Streaming Decode Memory: 0 B
-Sample Sound Memory: 45.1 MB
-Other Memory: 1.4 MB
-
-
-Total Audio Sources: 41
-Playing Audio Sources: 38
-Paused Audio Sources: 3
-Audio Clip Count: 8
-Audio Voices: 38
-Total Audio CPU: 5.0 %
-DSP CPU: 4.3 %
-Streaming CPU: 0.0 %
-Other CPU: 0.7 %
-Total Audio Memory: 4.4 MB
-Streaming File Memory: 0 B
-Streaming Decode Memory: 0 B
-Sample Sound Memory: 0 B
-Other Memory: 2.4 MB
-
+Total Audio Sources: 41<br>
+Playing Audio Sources: 38<br>
+Paused Audio Sources: 3<br>
+Audio Clip Count: 8<br>
+Audio Voices: 38<br>
+Total Audio CPU: 1.3 %<br>
+DSP CPU: 0.7 %<br>
+Streaming CPU: 0.0 %<br>
+Other CPU: 0.6 %<br>
+Total Audio Memory: 46.5 MB<br>
+Streaming File Memory: 0 B<br>
+Streaming Decode Memory: 0 B<br>
+Sample Sound Memory: 45.1 MB<br>
+Other Memory: 1.4 MB<br>
 
 <div align="center">
   <a href="Images\01 - Audio Profiler.png" target="_blank">
@@ -54,11 +34,24 @@ Other Memory: 2.4 MB
   </a>
 </div>
 
-Now we have a recorded pre-optimisation performance. Your Total Audio Memory right now should be around 45 MB. This is quite high. In comparison, the Nintendo 3DS has 128 MB of RAM total and the Nintendo DS only had 4 MB of RAM in total!
+Also take note of the time per frame on the CPU usage, like shown here: 
+<br>Time per Frame: 6 ms
 
-Your task is to reduce the Total Audio Memory to as low as possible. Less than 20 MB is good but you could maybe get less than 10 or 5 MB. You may increase an other metric by reducing Total Audio Memory, so be cautious on the impact you have on other metrics and assess the time per frame to see if there was any overall impact as a result. Of course make the audio quality is still good! Go through questions 3 and 4 to help you.
+<div align="center">
+  <a href="Images/03 - CPU Usage.png" target="_blank">
+    <img src="Images/03 - CPU Usage.png" alt="CPU Usage" style="height:300px;"/>
+  </a>
+</div>
 
-4. Using what you learned in the presentation and **02 - Audio Clip Optimisation** as reference, optimize the audio files in the inspector. Give it a go first, then take a look at the hints below to see if there's anything more you can do.
+<br>
+
+You can learn more about the Audio Profiler Module at the [Unity Dosc](https://docs.unity3d.com/Manual/ProfilerAudio.html)
+
+Now we have a recorded pre-optimisation performance. Your Total Audio Memory right now should be around 45 MB. This is quite high. In comparison, the Nintendo 3DS has 128 MB of RAM in total and the Nintendo DS only had 4 MB of RAM in total!
+
+Your task is to reduce the Total Audio Memory to as low as possible. Less than 20 MB is good but you could maybe get less than 10 or 5 MB. You may increase an other metric by reducing Total Audio Memory, so be cautious on the impact you have on other metrics and assess the time per frame to see if there was any overall impact as a result. Of course make sure the audio quality is still good! Go through questions 4 and 5 to help you.
+
+4. Using what you learned in the presentation and **[the official docs for audio clips in the inspector](https://docs.unity3d.com/Manual/class-AudioClip.html)** as reference, optimize the audio files in the inspector. Give it a go first, then take a look at the hints below to see if there's anything more you can do.
 
 <details>
 <summary>Hint for Q4 - 1</summary>
@@ -77,7 +70,9 @@ Override the sample rate or use Optimize Sample Rate. The less high frequency co
 Set the soundtrack 'Fantastic Dim Bar' to streaming mode. This will save loading this large file into RAM.
 </details>
 
-5. Time to code. Create a mini audio middleware of your own that optimises audio performance. Have a go at thinking of your own ways first, I mentioned some in the presentation. There's some hints below to give you ideas.
+Do a quick profile before continuing. How do things compare to before?
+
+5. In question 4 you optimised the audio, now you must consider optimizations related to the audio engine specifically. Create a mini audio middleware of your own that optimises audio performance. Have a go at thinking of your own ways first, I may have mentioned some ideas in the presentation. There's some hints below to give you ideas.
 
 <details>
 <summary>Hint for Q5 - 1</summary>
@@ -85,7 +80,7 @@ SFXFootstepsLooping is a 5 second plus loop. Use Audacity to edit this loop to b
 </details>
 <details>
 <summary>Hint for Q5 - 2</summary>
-Add audio culling: Set the priority of each each clip. Open Edit > Project Settings > Audio and set both thresholds to 1. When you run the game you will only head one audio source. What effect does this have on the audio metrics? Lower the number of voices to a value you think could work for the game. Write an audio priority manager script that assesses the distance an audio source is from the player and increase their priority to ensure the most important audio is played. Remember to include a way to keep the music playing.
+Add audio culling: Set the priority of each each clip. Open Edit > Project Settings > Audio and set both thresholds to 1. When you run the game you will only head one audio source. What effect does this have on the audio metrics? Lower the number of voices to a value you think could work for the game and write an audio priority manager script that assesses the distance an audio source is from the player and increase their priority to ensure the most important audio is played. Remember to include a way to keep the music playing.
 <br>
 <br>
 
@@ -96,8 +91,12 @@ Add audio culling: Set the priority of each each clip. Open Edit > Project Setti
 >"Virtual voices are inaudible. They are sounds that continue to run in the background but will not be heard, even if they are within range of the Audio Listener. The benefit of a virtual sound is that it keeps the audio going in the background when there’s not a real channel free to play it. Once there is a spare channel, the virtualised voice becomes a real voice and picks up from the correct position, as if it had been playing this whole time. If the virtual voice limit is exceeded, the lowest priority sounds will be paused or won’t be started at all."
 ><a href="https://gamedevbeginner.com/unity-audio-optimisation-tips/">Source</a>
 </details>
+<details>
+<summary>Hint for Q5 - 3</summary>
+No more hints! Research any new techniques and write some scripts to manage the audio further and see if it has an effect in the audio profiler.
+</details>
 
-5. By how much did you reduce the Total Audio Memory? What is this as a percentage reduction? Did this have much effect on FPS and Time per Frame?
+6. By how much did you reduce the Total Audio Memory? What is this as a percentage reduction? Did this have much effect on FPS and Time per Frame?
 
 ## Extra Resources
 ### Sourcing Free, Royalty-free Audio
@@ -121,7 +120,7 @@ Most royalty-free. All free but may require an account.
 ### Unity
 - [Unity Docs - Audio Profiler Module](https://docs.unity3d.com/Manual/ProfilerAudio.html)
 - [Unity Docs - Audio Files](https://docs.unity3d.com/Manual/AudioFiles.html)
-- [Unity Docs - Audio Files 2 (I think this is the older equivalent of the link above but it is more in-depth)](https://docs.unity3d.com/352/Documentation/Manual/AudioFiles.html#:~:text=Depending%20on%20the%20target%2C%20Unity,let%20Unity%20do%20the%20encoding.)
+- [Unity Docs - Audio Files 2 (I think this is the older equivalent of the link above but has more depth in some areas)](https://docs.unity3d.com/352/Documentation/Manual/AudioFiles.html#:~:text=Depending%20on%20the%20target%2C%20Unity,let%20Unity%20do%20the%20encoding.)
 - [Game Dev Beginner - Unity Audio Optimisation Tips](https://gamedevbeginner.com/unity-audio-optimisation-tips/) ⭐
 - [Game Developer - Getting More Bam for your RAM](https://www.gamedeveloper.com/audio/unity-audio-import-optimisation---getting-more-bam-for-your-ram)
 
