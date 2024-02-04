@@ -45,7 +45,7 @@ Also take note of the time per frame on the CPU usage, like shown here:
 
 <br>
 
-You can learn more about the Audio Profiler Module at the [Unity Dosc](https://docs.unity3d.com/Manual/ProfilerAudio.html)
+You can learn more about the Audio Profiler Module at the [Unity Docs](https://docs.unity3d.com/Manual/ProfilerAudio.html)
 
 Now we have a recorded pre-optimisation performance. Your Total Audio Memory right now should be around 45 MB. This is quite high. In comparison, the Nintendo 3DS has 128 MB of RAM in total and the Nintendo DS only had 4 MB of RAM in total!
 
